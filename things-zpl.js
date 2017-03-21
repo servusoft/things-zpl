@@ -12,8 +12,17 @@ exports.config = config;
 },{}],2:[function(require,module,exports){
 'use strict';
 
-// var zpl = require("./src/api");
-var zpl = require("./lib/api");
+// use souce:
+var zpl = require("./src/api");
+
+// use comiled:
+// npm run compile
+// var zpl = require("./lib/api")
+
+// use in browswe:
+// npm run build
+// <script src="things-zpl-min.js"></script>
+
 
 if (typeof window !== 'undefined') window.zpl = zpl;
 
@@ -21,7 +30,7 @@ if (typeof exports !== 'undefined') {
   exports.zpl = zpl;
 }
 
-},{"./lib/api":3}],3:[function(require,module,exports){
+},{"./src/api":3}],3:[function(require,module,exports){
 'use strict';
 
 exports.convert = require('./converter').convert;
@@ -972,27 +981,28 @@ function barcode(properties) {
 	this.model = properties;
 
 	this.toZpl = function (group) {
-		var _model = this.model;
-		var _model$left = _model.left;
-		var left = _model$left === undefined ? '' : _model$left;
-		var _model$top = _model.top;
-		var top = _model$top === undefined ? '' : _model$top;
-		var _model$width = _model.width;
-		var width = _model$width === undefined ? '' : _model$width;
-		var _model$height = _model.height;
-		var height = _model$height === undefined ? '' : _model$height;
-		var _model$symbol = _model.symbol;
-		var symbol = _model$symbol === undefined ? '' : _model$symbol;
-		var _model$rotation = _model.rotation;
-		var rotation = _model$rotation === undefined ? '' : _model$rotation;
-		var _model$scale_w = _model.scale_w;
-		var scale_w = _model$scale_w === undefined ? 1 : _model$scale_w;
-		var _model$showText = _model.showText;
-		var showText = _model$showText === undefined ? 'Y' : _model$showText;
-		var _model$textAbove = _model.textAbove;
-		var textAbove = _model$textAbove === undefined ? '' : _model$textAbove;
-		var _model$text = _model.text;
-		var text = _model$text === undefined ? '' : _model$text;
+		var _model = this.model,
+		    _model$left = _model.left,
+		    left = _model$left === undefined ? '' : _model$left,
+		    _model$top = _model.top,
+		    top = _model$top === undefined ? '' : _model$top,
+		    _model$width = _model.width,
+		    width = _model$width === undefined ? '' : _model$width,
+		    _model$height = _model.height,
+		    height = _model$height === undefined ? '' : _model$height,
+		    _model$symbol = _model.symbol,
+		    symbol = _model$symbol === undefined ? '' : _model$symbol,
+		    _model$rotation = _model.rotation,
+		    rotation = _model$rotation === undefined ? '' : _model$rotation,
+		    _model$scale_w = _model.scale_w,
+		    scale_w = _model$scale_w === undefined ? 1 : _model$scale_w,
+		    _model$showText = _model.showText,
+		    showText = _model$showText === undefined ? 'Y' : _model$showText,
+		    _model$textAbove = _model.textAbove,
+		    textAbove = _model$textAbove === undefined ? '' : _model$textAbove,
+		    _model$text = _model.text,
+		    text = _model$text === undefined ? '' : _model$text;
+
 
 		left += group ? group.left || 0 : 0;
 		top += group ? group.top || 0 : 0;
@@ -1029,7 +1039,12 @@ function barcode(properties) {
 		lines.push('^FO' + left + ',' + top);
 		lines.push(params.join(','));
 		if (symbol === 'qrcode') {
-			lines.push('^FDQ,' + 'A' + text);
+			//qrcode error correction level <H, Q, M, L>
+			//H = ultra-high reliability level
+			//Q = high reliability level
+			//M = standard level (default)
+			//L = high density leve
+			lines.push('^FD' + 'Q' + 'A,' + text);
 		} else {
 			lines.push('^FD' + text);
 		}
@@ -1055,23 +1070,24 @@ function ellipse(properties) {
 	this.model = properties;
 
 	this.toZpl = function (group) {
-		var _model = this.model;
-		var _model$rx = _model.rx;
-		var rx = _model$rx === undefined ? '' : _model$rx;
-		var _model$ry = _model.ry;
-		var ry = _model$ry === undefined ? '' : _model$ry;
-		var _model$cx = _model.cx;
-		var cx = _model$cx === undefined ? '' : _model$cx;
-		var _model$cy = _model.cy;
-		var cy = _model$cy === undefined ? '' : _model$cy;
-		var _model$lineWidth = _model.lineWidth;
-		var lineWidth = _model$lineWidth === undefined ? '' : _model$lineWidth;
-		var fillStyle = _model.fillStyle;
-		var strokeStyle = _model.strokeStyle;
-		var left = _model.left;
-		var top = _model.top;
-		var rotation = _model.rotation;
-		var text = _model.text;
+		var _model = this.model,
+		    _model$rx = _model.rx,
+		    rx = _model$rx === undefined ? '' : _model$rx,
+		    _model$ry = _model.ry,
+		    ry = _model$ry === undefined ? '' : _model$ry,
+		    _model$cx = _model.cx,
+		    cx = _model$cx === undefined ? '' : _model$cx,
+		    _model$cy = _model.cy,
+		    cy = _model$cy === undefined ? '' : _model$cy,
+		    _model$lineWidth = _model.lineWidth,
+		    lineWidth = _model$lineWidth === undefined ? '' : _model$lineWidth,
+		    fillStyle = _model.fillStyle,
+		    strokeStyle = _model.strokeStyle,
+		    left = _model.left,
+		    top = _model.top,
+		    rotation = _model.rotation,
+		    text = _model.text;
+
 
 		var rotate = rotateCase(rotation);
 
@@ -1230,16 +1246,17 @@ function line(properties) {
 	this.model = properties;
 
 	this.toZpl = function (group) {
-		var _model = this.model;
-		var _model$x = _model.x1;
-		var x1 = _model$x === undefined ? '' : _model$x;
-		var _model$x2 = _model.x2;
-		var x2 = _model$x2 === undefined ? '' : _model$x2;
-		var _model$y = _model.y1;
-		var y1 = _model$y === undefined ? '' : _model$y;
-		var _model$y2 = _model.y2;
-		var y2 = _model$y2 === undefined ? '' : _model$y2;
-		var fillStyle = _model.fillStyle;
+		var _model = this.model,
+		    _model$x = _model.x1,
+		    x1 = _model$x === undefined ? '' : _model$x,
+		    _model$x2 = _model.x2,
+		    x2 = _model$x2 === undefined ? '' : _model$x2,
+		    _model$y = _model.y1,
+		    y1 = _model$y === undefined ? '' : _model$y,
+		    _model$y2 = _model.y2,
+		    y2 = _model$y2 === undefined ? '' : _model$y2,
+		    fillStyle = _model.fillStyle;
+
 
 		if (fillStyle === 'white' || fillStyle === '#fff' || fillStyle === '#ffffff') {
 			fillStyle = 'W';
@@ -1265,19 +1282,20 @@ function line(properties) {
 
 function gbLine(group) {
 	// graphic box
-	var _model2 = this.model;
-	var _model2$x = _model2.x1;
-	var x1 = _model2$x === undefined ? '' : _model2$x;
-	var _model2$x2 = _model2.x2;
-	var x2 = _model2$x2 === undefined ? '' : _model2$x2;
-	var _model2$y = _model2.y1;
-	var y1 = _model2$y === undefined ? '' : _model2$y;
-	var _model2$y2 = _model2.y2;
-	var y2 = _model2$y2 === undefined ? '' : _model2$y2;
-	var lineWidth = _model2.lineWidth;
-	var strokeStyle = _model2.strokeStyle;
-	var _model2$rotation = _model2.rotation;
-	var rotation = _model2$rotation === undefined ? 0 : _model2$rotation;
+	var _model2 = this.model,
+	    _model2$x = _model2.x1,
+	    x1 = _model2$x === undefined ? '' : _model2$x,
+	    _model2$x2 = _model2.x2,
+	    x2 = _model2$x2 === undefined ? '' : _model2$x2,
+	    _model2$y = _model2.y1,
+	    y1 = _model2$y === undefined ? '' : _model2$y,
+	    _model2$y2 = _model2.y2,
+	    y2 = _model2$y2 === undefined ? '' : _model2$y2,
+	    lineWidth = _model2.lineWidth,
+	    strokeStyle = _model2.strokeStyle,
+	    _model2$rotation = _model2.rotation,
+	    rotation = _model2$rotation === undefined ? 0 : _model2$rotation;
+
 
 	if (strokeStyle === 'white' || strokeStyle === '#fff' || strokeStyle === '#ffffff') {
 		strokeStyle = 'W';
@@ -1299,18 +1317,19 @@ function gbLine(group) {
 }
 
 function gdLine(group) {
-	var _model3 = this.model;
-	var _model3$x = _model3.x1;
-	var x1 = _model3$x === undefined ? '' : _model3$x;
-	var _model3$x2 = _model3.x2;
-	var x2 = _model3$x2 === undefined ? '' : _model3$x2;
-	var _model3$y = _model3.y1;
-	var y1 = _model3$y === undefined ? '' : _model3$y;
-	var _model3$y2 = _model3.y2;
-	var y2 = _model3$y2 === undefined ? '' : _model3$y2;
-	var _model3$lineWidth = _model3.lineWidth;
-	var lineWidth = _model3$lineWidth === undefined ? '' : _model3$lineWidth;
-	var strokeStyle = _model3.strokeStyle;
+	var _model3 = this.model,
+	    _model3$x = _model3.x1,
+	    x1 = _model3$x === undefined ? '' : _model3$x,
+	    _model3$x2 = _model3.x2,
+	    x2 = _model3$x2 === undefined ? '' : _model3$x2,
+	    _model3$y = _model3.y1,
+	    y1 = _model3$y === undefined ? '' : _model3$y,
+	    _model3$y2 = _model3.y2,
+	    y2 = _model3$y2 === undefined ? '' : _model3$y2,
+	    _model3$lineWidth = _model3.lineWidth,
+	    lineWidth = _model3$lineWidth === undefined ? '' : _model3$lineWidth,
+	    strokeStyle = _model3.strokeStyle;
+
 
 	if (strokeStyle === 'white' || strokeStyle === '#fff' || strokeStyle === '#ffffff') {
 		strokeStyle = 'W';
@@ -1355,23 +1374,23 @@ function rect(properties) {
 	this.model = properties;
 
 	this.toZpl = function (group) {
-		var _model = this.model;
-		var _model$width = _model.width;
-		var width = _model$width === undefined ? '' : _model$width;
-		var _model$height = _model.height;
-		var height = _model$height === undefined ? '' : _model$height;
-		var _model$lineWidth = _model.lineWidth;
-		var lineWidth = _model$lineWidth === undefined ? '' : _model$lineWidth;
-		var _model$fillStyle = _model.fillStyle;
-		var fillStyle = _model$fillStyle === undefined ? '' : _model$fillStyle;
-		var strokeStyle = _model.strokeStyle;
-		var left = _model.left;
-		var top = _model.top;
-		var rotation = _model.rotation;
-		var _model$round = _model.round;
-		var round = _model$round === undefined ? 0 : _model$round;
-		var // 0 ~ 100
-		text = _model.text;
+		var _model = this.model,
+		    _model$width = _model.width,
+		    width = _model$width === undefined ? '' : _model$width,
+		    _model$height = _model.height,
+		    height = _model$height === undefined ? '' : _model$height,
+		    _model$lineWidth = _model.lineWidth,
+		    lineWidth = _model$lineWidth === undefined ? '' : _model$lineWidth,
+		    _model$fillStyle = _model.fillStyle,
+		    fillStyle = _model$fillStyle === undefined ? '' : _model$fillStyle,
+		    strokeStyle = _model.strokeStyle,
+		    left = _model.left,
+		    top = _model.top,
+		    rotation = _model.rotation,
+		    _model$round = _model.round,
+		    round = _model$round === undefined ? 0 : _model$round,
+		    text = _model.text;
+
 
 		var rotate = rotateCase(rotation);
 
@@ -1414,11 +1433,9 @@ function rect(properties) {
 
 		var commands = [['^FO' + left, top], ['^GB' + width, height, lineWidth, strokeStyle, Math.round(round * 8 / 100)], ['^FS']];
 
-		var zpl = '';
-		commands.forEach(function (c) {
-			zpl += c.join(',') + '\n';
-		});
-		zpl += '\n';
+		var zpl = commands.map(function (command) {
+			return command.join(',');
+		}).join('\n') + '\n\n';
 
 		// make text command
 		if (text) {
@@ -1445,30 +1462,31 @@ function text(properties) {
   this.model = properties; // text 에서는 left, top만 위치를 결정함, width, height는 의미가 없음.
 
   this.toZpl = function (group) {
-    var _model = this.model;
-    var _model$text = _model.text;
-    var text = _model$text === undefined ? '' : _model$text;
-    var _model$left = _model.left;
-    var left = _model$left === undefined ? 0 : _model$left;
-    var _model$top = _model.top;
-    var top = _model$top === undefined ? 0 : _model$top;
-    var _model$width = _model.width;
-    var width = _model$width === undefined ? '' : _model$width;
-    var _model$height = _model.height;
-    var height = _model$height === undefined ? '' : _model$height;
-    var _model$textType = _model.textType;
-    var textType = _model$textType === undefined ? '' : _model$textType;
-    var charWidth = _model.charWidth;
-    var charHeight = _model.charHeight;
-    var lineCount = _model.lineCount;
-    var _model$rotation = _model.rotation;
-    var rotation = _model$rotation === undefined ? 0 : _model$rotation;
-    var underLine = _model.underLine;
-    var strike = _model.strike;
-    var _model$maxLines = _model.maxLines;
-    var maxLines = _model$maxLines === undefined ? 100 : _model$maxLines;
-    var hangingIndent = _model.hangingIndent;
-    var lineMargin = _model.lineMargin;
+    var _model = this.model,
+        _model$text = _model.text,
+        text = _model$text === undefined ? '' : _model$text,
+        _model$left = _model.left,
+        left = _model$left === undefined ? 0 : _model$left,
+        _model$top = _model.top,
+        top = _model$top === undefined ? 0 : _model$top,
+        _model$width = _model.width,
+        width = _model$width === undefined ? '' : _model$width,
+        _model$height = _model.height,
+        height = _model$height === undefined ? '' : _model$height,
+        _model$textType = _model.textType,
+        textType = _model$textType === undefined ? '' : _model$textType,
+        charWidth = _model.charWidth,
+        charHeight = _model.charHeight,
+        lineCount = _model.lineCount,
+        _model$rotation = _model.rotation,
+        rotation = _model$rotation === undefined ? 0 : _model$rotation,
+        underLine = _model.underLine,
+        strike = _model.strike,
+        _model$maxLines = _model.maxLines,
+        maxLines = _model$maxLines === undefined ? 100 : _model$maxLines,
+        hangingIndent = _model.hangingIndent,
+        lineMargin = _model.lineMargin;
+
 
     if (!width) {
       this.model.width = charWidth * text.length;
@@ -1533,16 +1551,17 @@ function text(properties) {
 function lineZpl(group, rotate) {
   var _this = this;
 
-  var _model2 = this.model;
-  var left = _model2.left;
-  var top = _model2.top;
-  var width = _model2.width;
-  var textWidth = _model2.textWidth;
-  var charHeight = _model2.charHeight;
-  var _model2$lineCount = _model2.lineCount;
-  var lineCount = _model2$lineCount === undefined ? 1 : _model2$lineCount;
-  var underLine = _model2.underLine;
-  var strike = _model2.strike;
+  var _model2 = this.model,
+      left = _model2.left,
+      top = _model2.top,
+      width = _model2.width,
+      textWidth = _model2.textWidth,
+      charHeight = _model2.charHeight,
+      _model2$lineCount = _model2.lineCount,
+      lineCount = _model2$lineCount === undefined ? 1 : _model2$lineCount,
+      underLine = _model2.underLine,
+      strike = _model2.strike;
+
 
   textWidth = textWidth || width;
 
@@ -1604,15 +1623,6 @@ exports.Text = text;
 },{"../../config":1,"./line":15,"./transcoord":18}],18:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.transcoordS2P = transcoordS2P;
-exports.shapeTranscoord = shapeTranscoord;
-exports.textTranscoord = textTranscoord;
-exports.calcDotSize = calcDotSize;
-exports.rotateCase = rotateCase;
-
 /*
  * 좌표 변환 API.
  */
@@ -1630,9 +1640,9 @@ function calcCenter(left, top, width, height) {
  * (기존의 reverseTranscoord와 동일함 - RR은 Reverse Rotation을 의미함.)
  */
 function transcoordRR(x, y) {
-  var rotatePoint = arguments.length <= 2 || arguments[2] === undefined ? { x: 0, y: 0 } : arguments[2];
-  var rotation = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
-  var scale = arguments.length <= 4 || arguments[4] === undefined ? { x: 1, y: 1 } : arguments[4];
+  var rotatePoint = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { x: 0, y: 0 };
+  var rotation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  var scale = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : { x: 1, y: 1 };
 
   x -= rotatePoint.x;
   y -= rotatePoint.y;
@@ -1647,13 +1657,14 @@ function transcoordRR(x, y) {
  * transcoordS2P는 현재 컴포넌트(Self) 기준의 논리좌표를 부모(Parent) 컨테이너 기준의 논리좌표로 변환한다.
  */
 function transcoordS2P(x, y, model) {
-  var left = model.left;
-  var top = model.top;
-  var width = model.width;
-  var height = model.height;
-  var _model$rotation = model.rotation;
-  var rotation = _model$rotation === undefined ? 0 : _model$rotation;
-  var text = model.text;
+  var left = model.left,
+      top = model.top,
+      width = model.width,
+      height = model.height,
+      _model$rotation = model.rotation,
+      rotation = _model$rotation === undefined ? 0 : _model$rotation,
+      text = model.text;
+
 
   var rotatePoint = calcCenter(left, top, width, height);
   var point = transcoordRR(x, y, rotatePoint, rotation);
@@ -1665,10 +1676,10 @@ function transcoordS2P(x, y, model) {
 }
 
 function shapeTranscoord(model) {
-  var left = model.left;
-  var top = model.top;
-  var width = model.width;
-  var height = model.height;
+  var left = model.left,
+      top = model.top,
+      width = model.width,
+      height = model.height;
 
   // 회전
 
@@ -1725,25 +1736,21 @@ function textTranscoord(model) {
 }
 
 function calcTextPosition(model) {
-  var _model$textAlign =
-  // paddingLeft = 0,
-  // paddingRight = 0,
-  // paddingTop = 0,
-  // paddingBottom = 0
-  model.textAlign;
-  var textAlign = _model$textAlign === undefined ? 'center' : _model$textAlign;
-  var _model$textBaseline = model.textBaseline;
-  var textBaseline = _model$textBaseline === undefined ? 'middle' : _model$textBaseline;
-  var left = model.left;
-  var width = model.width;
-  var height = model.height;
-  var charHeight = model.charHeight;
-  var textWidth = model.textWidth;
-  var rotation = model.rotation;
-  var _model$lineMargin = model.lineMargin;
-  var lineMargin = _model$lineMargin === undefined ? 0 : _model$lineMargin;
-  var _model$lineCount = model.lineCount;
-  var lineCount = _model$lineCount === undefined ? 1 : _model$lineCount;
+  var _model$textAlign = model.textAlign,
+      textAlign = _model$textAlign === undefined ? 'center' : _model$textAlign,
+      _model$textBaseline = model.textBaseline,
+      textBaseline = _model$textBaseline === undefined ? 'middle' : _model$textBaseline,
+      left = model.left,
+      width = model.width,
+      height = model.height,
+      charHeight = model.charHeight,
+      textWidth = model.textWidth,
+      rotation = model.rotation,
+      _model$lineMargin = model.lineMargin,
+      lineMargin = _model$lineMargin === undefined ? 0 : _model$lineMargin,
+      _model$lineCount = model.lineCount,
+      lineCount = _model$lineCount === undefined ? 1 : _model$lineCount;
+
 
   textWidth = textWidth || width;
 
@@ -1775,6 +1782,7 @@ function calcTextPosition(model) {
 
   //     break;
   // }
+
 
   switch (textAlign) {
     case 'left':
@@ -1816,6 +1824,7 @@ function calcTextPosition(model) {
   //     //   ty = (myWidth - textWidth) / 2 + paddingRight;
   //     // }
 
+
   //     break;
   // }
 
@@ -1839,6 +1848,7 @@ function calcTextPosition(model) {
 }
 
 var config = require('../../config').config;
+
 function calcDotSize(model) {
   for (var property in model) {
     if (property === 'rotation' || property === 'scale_w' || property === 'scale_h' || property === 'round') {
@@ -1867,6 +1877,12 @@ function rotateCase(rotate) {
 
   return rotate;
 }
+
+exports.textTranscoord = textTranscoord;
+exports.shapeTranscoord = shapeTranscoord;
+exports.textTranscoord = textTranscoord;
+exports.rotateCase = rotateCase;
+exports.calcDotSize = calcDotSize;
 
 },{"../../config":1}],19:[function(require,module,exports){
 'use strict';
@@ -1925,8 +1941,8 @@ exports.convert = function (zpl) {
 
     switch (command) {
       case 'XZ':
-        // 마지막 바코드는 FS를 생략하고 XZ로 끝나도 가능
-        if (obj == null) // XZ가 null인 경우는 마지막 바코드도 FS로 끝나는 경우
+        // 마지막 바코드는 FS를 생략하고 XZ로 끝나도 가능 
+        if (obj == null) // XZ가 null인 경우는 마지막 바코드도 FS로 끝나는 경우 
           break;
 
       case 'FS':
