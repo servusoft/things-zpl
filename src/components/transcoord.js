@@ -28,7 +28,7 @@ function transcoordRR(x, y, rotatePoint = {x: 0, y: 0}, rotation = 0, scale = {x
 /*
  * transcoordS2P는 현재 컴포넌트(Self) 기준의 논리좌표를 부모(Parent) 컨테이너 기준의 논리좌표로 변환한다.
  */
-export function transcoordS2P(x, y, model) {
+function transcoordS2P(x, y, model) {
 
   var { left, top, width, height, rotation = 0, text } = model;
 
@@ -41,7 +41,7 @@ export function transcoordS2P(x, y, model) {
   }
 }
 
-export function shapeTranscoord(model) {
+function shapeTranscoord(model) {
   var {
     left,
     top,
@@ -59,7 +59,7 @@ export function shapeTranscoord(model) {
   return {x, y}
 }
 
-export function textTranscoord(model) {
+function textTranscoord(model) {
   var point = shapeTranscoord(model)  // start point
   var x = point.x;
   var y = point.y;
@@ -220,7 +220,8 @@ function calcTextPosition(model) {
 
 
 var config = require('../../config').config
-export function calcDotSize(model) {
+
+function calcDotSize(model) {
   for (var property in model) {
     if (property === 'rotation' || property === 'scale_w' || property === 'scale_h' || property === 'round') {
       continue;
@@ -234,7 +235,7 @@ export function calcDotSize(model) {
   }
 }
 
-export function rotateCase(rotate) {
+function rotateCase(rotate) {
   if (Math.PI * 0.25 < rotate && rotate <= Math.PI * 0.75) {
     rotate = 'R'
   } else if ((Math.PI * 0.75 < rotate && rotate <= Math.PI * 1.25)
@@ -250,3 +251,8 @@ export function rotateCase(rotate) {
   return rotate;
 }
 
+exports.textTranscoord =  textTranscoord;
+exports.shapeTranscoord = shapeTranscoord;
+exports.textTranscoord = textTranscoord;
+exports.rotateCase = rotateCase;
+exports.calcDotSize = calcDotSize;

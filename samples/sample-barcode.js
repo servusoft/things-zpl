@@ -260,7 +260,7 @@ exports.sample =
   {
     left: 110,
     top: 320,
-    type: "qrcode",
+    type: "barcode",
     model: "N",
     position: "2",
     magnification: "10",
