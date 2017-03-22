@@ -24,11 +24,11 @@ or<br>
 
 convert zpl -> model<br>
   `var converter = zpl.zpl;`<br>
-  `var model = converter.convert(zpl);`<br>
+  `var model = converter.convert(ZPL);`<br>
 
 convert model -> zpl<br>
   `var reverter = zpl.zpl;`<br>
-  `var zpl = reverter.revert(model);`<br>
+  `var ZPL = reverter.revert(model);`<br>
 
 ### develop
 to using from source adopt `index.js` as:<br>
