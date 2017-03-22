@@ -6,38 +6,36 @@ things-zpl
 ### installing
 
 original version:
-  `git clone https://github.com/heartyoh/things-zpl`
+  `git clone https://github.com/heartyoh/things-zpl`<br>
 
 fixed (qrcode) version:
-  `git clone https://github.com/servusoft/things-zpl`
-  `cd things-zpl`
-  `npm install`
+  `git clone https://github.com/servusoft/things-zpl`<br>
+  `cd things-zpl`<br>
+  `npm install`<br>
 
 ### build
-  `npm run compile` to create `./lib/api`
-  `npm run build` to create `things-zpl[-min].js`
+  `npm run compile` to create `./lib/api`<br>
+  `npm run build` to create `things-zpl[-min].js`<br>
 
 ### using
-  `var zpl = require("./src/api");`
-or
-  `import zpl from './things-zpl';`
+  `var zpl = require("./things-zpl");`<br>
+or<br>
+  `import zpl from "./things-zpl";`<br>
 
-convert zpl -> model
-  `var converter = zpl.zpl`
-  `var model = converter.convert(zpl)`
+convert zpl -> model<br>
+  `var converter = zpl.zpl;`<br>
+  `var model = converter.convert(zpl);`<br>
 
-convert model -> zpl
-  `var reverter = zpl.zpl`
-  `var zpl = reverter.revert(model)`
-
+convert model -> zpl<br>
+  `var reverter = zpl.zpl;`<br>
+  `var zpl = reverter.revert(model);`<br>
 
 ### develop
-using from source:   adopt `index.js` as
-`var zpl = require("./src/api");`
+to using from source adopt `index.js` as:<br>
+`var zpl = require("./src/api");`<br>
 
-use comiled: adopt `index.js` as
-`var zpl = require("./lib/api")`
+to useing as comiled adopt `index.js` as:<br>
+`var zpl = require("./lib/api");`<br>
 
-
-### license 
+### license
 ISC License
