@@ -3,7 +3,7 @@ things-zpl
 
 ## a ZPL converter from/to a model (JSON) format
 
-###installing
+### installing
 
 original version:
   `git clone https://github.com/heartyoh/things-zpl`
@@ -13,11 +13,11 @@ fixed (qrcode) version:
   `cd things-zpl`
   `npm install`
 
-###build
+### build
   `npm run compile` to create `./lib/api`
   `npm run build` to create `things-zpl[-min].js`
 
-###using
+### using
   `var zpl = require("./src/api");`
 or
   `import zpl from './things-zpl';`
@@ -31,7 +31,7 @@ convert model -> zpl
   `var zpl = reverter.revert(model)`
 
 
-###develop
+### develop
 using from source:   adopt `index.js` as
 `var zpl = require("./src/api");`
 
@@ -39,5 +39,5 @@ use comiled: adopt `index.js` as
 `var zpl = require("./lib/api")`
 
 
-###license 
-ISC
+### license 
+ISC License
